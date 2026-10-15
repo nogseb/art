@@ -24,7 +24,7 @@ Le build statique est produit dans `dist/public/`.
 
 ## Publication sur `nogues.app/art`
 
-Chaque push sur `main` déclenche `.github/workflows/deploy-nogues-app.yml` : le site est compilé puis synchronisé par SFTP depuis `dist/public/` vers `./art/` du compte SFTP.
+Chaque push sur `main` déclenche `.github/workflows/deploy-nogues-app.yml` : le site est compilé puis synchronisé par SFTP depuis `dist/public/` vers `./www/art/` du compte SFTP, le répertoire web standard de l’hébergement OVH.
 
 Le workflow attend trois secrets GitHub, déjà configurés dans le dépôt :
 
@@ -32,7 +32,7 @@ Le workflow attend trois secrets GitHub, déjà configurés dans le dépôt :
 - `SFTP_USERNAME` ou `SFTP_USER` : utilisateur SFTP ;
 - `SFTP_PASSWORD` : mot de passe SFTP.
 
-La synchronisation est **non destructive** (`delete_remote_files: false`) : elle n’efface pas de fichiers distants avant l’envoi. Le répertoire cible `./art/` doit correspondre à la racine web exposée sous `https://nogues.app/art/` pour le compte SFTP.
+La synchronisation est **non destructive** (`delete_remote_files: false`) : elle n’efface pas de fichiers distants avant l’envoi. Le répertoire cible `./www/art/` correspond au chemin attendu pour `https://nogues.app/art/` sur l’hébergement OVH.
 
 ## Structure
 
