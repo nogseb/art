@@ -12,7 +12,7 @@ export default function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-white/8 bg-[oklch(0.08_0.005_285/0.95)] backdrop-blur-md">
       <div className="container flex items-center justify-between h-14">
-        <a href="/" className="flex items-center gap-3 no-underline group">
+        <a href="./" className="flex items-center gap-3 no-underline group">
           <div className="w-8 h-8 border border-white/20 flex items-center justify-center text-xs font-mono font-bold text-white/90 group-hover:border-white/40 transition-colors">1%</div>
           <div className="hidden sm:block">
             <div className="text-sm font-bold tracking-wide text-white/90 leading-none">NATHALIE CHARRIÉ</div>
