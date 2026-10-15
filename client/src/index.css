@@ -1,0 +1,230 @@
+/* ============================================================
+   DESIGN SYSTEM — "Tableau de Bord Céramiste"
+   Fond sombre · Space Grotesk + Space Mono · Badges couleur
+   ============================================================ */
+
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Custom design tokens */
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+
+  /* Priority colors */
+  --color-urgent: oklch(0.55 0.22 25);       /* Rouge vif */
+  --color-urgent-bg: oklch(0.55 0.22 25 / 15%);
+  --color-high: oklch(0.72 0.18 65);         /* Ambre */
+  --color-high-bg: oklch(0.72 0.18 65 / 15%);
+  --color-medium: oklch(0.65 0.18 250);      /* Bleu électrique */
+  --color-medium-bg: oklch(0.65 0.18 250 / 15%);
+  --color-low: oklch(0.45 0.01 0);           /* Gris */
+  --color-low-bg: oklch(0.45 0.01 0 / 15%);
+  --color-active: oklch(0.65 0.18 145);      /* Vert actif */
+}
+
+:root {
+  --radius: 0.25rem;
+
+  /* Dark theme as default */
+  --background: oklch(0.08 0.005 285);
+  --foreground: oklch(0.91 0.005 65);
+  --card: oklch(0.11 0.006 285);
+  --card-foreground: oklch(0.91 0.005 65);
+  --popover: oklch(0.13 0.006 285);
+  --popover-foreground: oklch(0.91 0.005 65);
+  --primary: oklch(0.91 0.005 65);
+  --primary-foreground: oklch(0.08 0.005 285);
+  --secondary: oklch(0.16 0.006 285);
+  --secondary-foreground: oklch(0.75 0.005 65);
+  --muted: oklch(0.16 0.006 285);
+  --muted-foreground: oklch(0.55 0.01 285);
+  --accent: oklch(0.18 0.006 285);
+  --accent-foreground: oklch(0.91 0.005 65);
+  --destructive: oklch(0.55 0.22 25);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(1 0 0 / 8%);
+  --input: oklch(1 0 0 / 10%);
+  --ring: oklch(0.91 0.005 65 / 30%);
+  --chart-1: oklch(0.55 0.22 25);
+  --chart-2: oklch(0.72 0.18 65);
+  --chart-3: oklch(0.65 0.18 250);
+  --chart-4: oklch(0.65 0.18 145);
+  --chart-5: oklch(0.55 0.01 0);
+  --sidebar: oklch(0.11 0.006 285);
+  --sidebar-foreground: oklch(0.91 0.005 65);
+  --sidebar-primary: oklch(0.91 0.005 65);
+  --sidebar-primary-foreground: oklch(0.08 0.005 285);
+  --sidebar-accent: oklch(0.16 0.006 285);
+  --sidebar-accent-foreground: oklch(0.91 0.005 65);
+  --sidebar-border: oklch(1 0 0 / 8%);
+  --sidebar-ring: oklch(0.91 0.005 65 / 30%);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Space Grotesk', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  [type="button"]:not(:disabled),
+  [type="submit"]:not(:disabled),
+  [type="reset"]:not(:disabled),
+  a[href],
+  select:not(:disabled),
+  input[type="checkbox"]:not(:disabled),
+  input[type="radio"]:not(:disabled) {
+    @apply cursor-pointer;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .font-mono, code, pre {
+    font-family: 'Space Mono', monospace;
+  }
+}
+
+@layer components {
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .flex {
+    min-height: 0;
+    min-width: 0;
+  }
+
+  @media (min-width: 640px) {
+    .container {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+      max-width: 1100px;
+    }
+  }
+
+  /* Priority badge system */
+  .badge-urgent {
+    background-color: var(--color-urgent-bg);
+    color: var(--color-urgent);
+    border: 1px solid var(--color-urgent);
+  }
+  .badge-high {
+    background-color: var(--color-high-bg);
+    color: var(--color-high);
+    border: 1px solid var(--color-high);
+  }
+  .badge-medium {
+    background-color: var(--color-medium-bg);
+    color: var(--color-medium);
+    border: 1px solid var(--color-medium);
+  }
+  .badge-low {
+    background-color: var(--color-low-bg);
+    color: var(--color-low);
+    border: 1px solid var(--color-low);
+  }
+
+  /* Card left border accent */
+  .card-urgent { border-left: 3px solid var(--color-urgent); }
+  .card-high { border-left: 3px solid var(--color-high); }
+  .card-medium { border-left: 3px solid var(--color-medium); }
+  .card-low { border-left: 3px solid var(--color-low); }
+
+  /* Countdown pulse animation */
+  @keyframes pulse-urgent {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+  .pulse-urgent {
+    animation: pulse-urgent 1.5s ease-in-out infinite;
+  }
+
+  /* Fade-up animation for cards */
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .animate-fade-up {
+    animation: fade-up 0.4s ease-out forwards;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: oklch(1 0 0 / 15%);
+    border-radius: 2px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: oklch(1 0 0 / 25%);
+  }
+}
