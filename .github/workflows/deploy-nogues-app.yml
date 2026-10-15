@@ -1,0 +1,48 @@
+name: Deploy website to nogues.app/art
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-nogues-app-art
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Build and deploy static website
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build static website
+        run: pnpm run build
+
+      - name: Deploy dist/public to nogues.app/art
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.6
+        with:
+          # Compatible avec les conventions SFTP_HOST/SFTP_SERVER et SFTP_USERNAME/SFTP_USER.
+          server: ${{ secrets.SFTP_HOST || secrets.SFTP_SERVER || secrets.FTP_SERVER }}
+          username: ${{ secrets.SFTP_USERNAME || secrets.SFTP_USER || secrets.FTP_USERNAME }}
+          password: ${{ secrets.SFTP_PASSWORD || secrets.SFTP_PASS || secrets.FTP_PASSWORD }}
+          port: 22
+          local_path: ./dist/public/*
+          remote_path: ./art/
+          # Conserve les fichiers non gérés par le site et évite toute suppression destructive.
+          delete_remote_files: false
+          sftpArgs: '-o ConnectTimeout=15'

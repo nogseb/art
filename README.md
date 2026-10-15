@@ -22,29 +22,21 @@ pnpm run build
 
 Le build statique est produit dans `dist/public/`.
 
-## Publication GitHub
-
-Chaque push sur `main` exécute le workflow `.github/workflows/deploy-pages.yml` et publie la version statique sur GitHub Pages. Cette publication fournit une URL de contrôle GitHub Pages ; elle ne remplace pas automatiquement l’hébergement actuel de `nogues.app`.
-
 ## Publication sur `nogues.app/art`
 
-Le domaine répond aujourd’hui depuis un serveur Apache externe et le chemin `/art` n’existe pas encore. GitHub ne peut pas le mettre à jour sans une liaison explicite avec ce serveur.
+Chaque push sur `main` déclenche `.github/workflows/deploy-nogues-app.yml` : le site est compilé puis synchronisé par SFTP depuis `dist/public/` vers `./art/` du compte SFTP.
 
-Le déploiement à activer côté hébergement consiste à copier le contenu du build GitHub Actions `dist/public/` dans le répertoire servi par Apache, puis à exposer ce répertoire sous `/art/`. Exemple de configuration Apache, à adapter au DocumentRoot réel :
+Le workflow attend trois secrets GitHub, déjà configurés dans le dépôt :
 
-```apache
-Alias /art/ /var/www/nogues.app/art/
-<Directory /var/www/nogues.app/art>
-    Options -Indexes
-    Require all granted
-</Directory>
-```
+- `SFTP_HOST` ou `SFTP_SERVER` : nom d’hôte SFTP ;
+- `SFTP_USERNAME` ou `SFTP_USER` : utilisateur SFTP ;
+- `SFTP_PASSWORD` : mot de passe SFTP.
 
-L’automatisation recommandée est un workflow GitHub Actions qui transfère l’artefact vers ce répertoire via SSH ou le mécanisme de déploiement déjà utilisé par le serveur. Les secrets de déploiement doivent être configurés dans GitHub par l’administrateur de l’hébergement ; ils ne sont pas stockés dans ce dépôt.
+La synchronisation est **non destructive** (`delete_remote_files: false`) : elle n’efface pas de fichiers distants avant l’envoi. Le répertoire cible `./art/` doit correspondre à la racine web exposée sous `https://nogues.app/art/` pour le compte SFTP.
 
 ## Structure
 
 - `client/` : interface React/Vite/Tailwind.
 - `client/src/data/appels.ts` : données et sources de la veille.
 - `client/src/components/ArchivesSection.tsx` : historique des alertes.
-- `.github/workflows/deploy-pages.yml` : build et publication GitHub Pages.
+- `.github/workflows/deploy-nogues-app.yml` : build et publication SFTP.
